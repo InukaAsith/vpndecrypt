@@ -31,7 +31,7 @@ def  _str2long (s, w):
     v = list (struct.unpack ( '<% iL'  % (m >> 2),s)) 
     if  w: v.append (n)  
     return  v  
-def  encrypt (str, key):  
+def  encrypt (str, key,_DELTA):  
     if  str ==  '' :  return  str  
     v = _str2long (str,  True )  
     k = _str2long (key.ljust ( 16 ,  b"\0" ),  False )  
@@ -52,7 +52,7 @@ def  encrypt (str, key):
         z = v [n]  
         q-=  1
     return  base64.b64encode(_long2str (v,  False ))  
-def  decrypt (str, key):
+def  decrypt (str, key,_DELTA):
     str=base64.b64decode(str)  
     if  str ==  '' :  return str  
     v = _str2long (str,  False )  
@@ -110,6 +110,7 @@ def get_text(message: Message) -> [None, str]:
 
 @bot.on_message(filters.private & filters.command(["encrypt"]))
 async def copy(client, message):
+
     url = await client.ask(message.chat.id, '*Send Raw data url:*')
     url=url.text
     url=str(url)
@@ -129,7 +130,7 @@ async def copy(client, message):
     except:
         await client.send_message(message.chat.id, 'ERROR: Delta must be an integer')
     #data()
-    res = encrypt(plain,key_).decode()
+    res = encrypt(plain,key_,_DELTA).decode()
     try:
         with open('encryptedData.txt','w') as f:
             f.write(str(res))
@@ -170,7 +171,7 @@ async def copy(client, message):
     except:
         await client.send_message(message.chat.id, 'ERROR: Delta must be an integer')
     #data()
-    res=decrypt (plain,key_ )
+    res=decrypt (plain,key_,_DELTA )
     try: 
         res = res.decode('ascii','ignore')
         with open('decryptedData.txt','w') as f:
