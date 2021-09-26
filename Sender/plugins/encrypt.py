@@ -178,14 +178,19 @@ def get_text(message: Message) -> [None, str]:
 @bot.on_message(filters.private & filters.command(["encrypt"]))
 async def copy(client, message):
     url = await client.ask(message.chat.id, '*Send Raw data url:*')
+    url=url.text
+    url=str(url)
     try:
         req=requests.get(url).text
     except:
         await client.send_message(message.chat.id, 'ERROR: Not valid url!')
     plain = req.strip('\n').encode() 
     key_ = await client.ask(message.chat.id, '*Enter Key:*')
+    key_=key_.text
+    key_=str(key_)
     key_ = key_.encode()
     _DELTA =  await client.ask(message.chat.id, '*Send DELTA:*')
+    _DELTA=_DELTA.text
     try: 
         int(_DELTA)
     except:
@@ -202,7 +207,7 @@ async def copy(client, message):
             await client.send_message(message.chat.id, out)
         except:
             pass
-        await client.send_document(message.chat.id, 'decryptedData.txt')
+        await client.send_document(message.chat.id, 'encryptedData.txt')
         try:
             os.remove('encryptedData.txt')
         except:
@@ -214,14 +219,19 @@ async def copy(client, message):
 @bot.on_message(filters.private & filters.command(["decrypt"]))
 async def copy(client, message):
     url = await client.ask(message.chat.id, '*Send Raw data url:*')
+    url=url.text
+    url=str(url)
     try:
         req=requests.get(url).text
     except:
         await client.send_message(message.chat.id, 'ERROR: Not valid url!')
     plain = req.strip('\n').encode() 
     key_ = await client.ask(message.chat.id, '*Enter Key:*')
+    key_=key_.text
+    key_=str(key_)
     key_ = key_.encode()
     _DELTA =  await client.ask(message.chat.id, '*Send DELTA:*')
+    _DELTA=_DELTA.text
     try: 
         int(_DELTA)
     except:
