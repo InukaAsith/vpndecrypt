@@ -33,6 +33,7 @@ def  _str2long (s, w):
     return  v  
 def  encrypt (str, key,_DELTA):  
     if  str ==  '' :  return  str  
+    _DELTA=int(_DELTA)
     v = _str2long (str,  True )  
     k = _str2long (key.ljust ( 16 ,  b"\0" ),  False )  
     n = len (v)  -1
@@ -54,6 +55,7 @@ def  encrypt (str, key,_DELTA):
     return  base64.b64encode(_long2str (v,  False ))  
 def  decrypt (str, key,_DELTA):
     str=base64.b64decode(str)  
+    _DELTA=int(_DELTA)
     if  str ==  '' :  return str  
     v = _str2long (str,  False )  
     k = _str2long (key.ljust ( 16 ,  b"\0" ),  False)  
