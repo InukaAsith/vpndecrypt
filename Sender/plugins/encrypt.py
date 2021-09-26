@@ -193,12 +193,17 @@ async def copy(client, message):
     data()
     res = encrypt(plain,key_).decode()
     try:
-        file = open('encryptedData.txt','w')
-        save = file.write(str(res))
-        file.close()
+        with open('encryptedData.txt','w') as f:
+            f.write(str(res))
+        
         out=res.decode()
         out=str(out)
         await client.send_message(message.chat.id, out)
+        await client.send_document(message.chat.id, 'decryptedData.txt')
+        try:
+            os.remove('encryptedData.txt')
+        except:
+            pass
     except:
         await client.send_message(message.chat.id, 'some entred data incorrect check again ')
 
@@ -222,11 +227,13 @@ async def copy(client, message):
     res=decrypt (plain,key_ )
     try: 
         res = res.decode('ascii','ignore')
-        file = open('decryptedData.txt','w')
-        save = file.write(str(res))
-        file.close()
+        with open('decryptedData.txt','w') as f:
+           f.write(str(res))
         res=str(res)
         await client.send_message(message.chat.id, out)
+        await client.send_document(message.chat.id, 'decryptedData.txt')
+        os.remove('decryptedData.txt')
+         
     except:
             
         await client.send_message(message.chat.id, 'some entred data incorrect check again ')
