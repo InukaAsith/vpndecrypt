@@ -198,7 +198,10 @@ async def copy(client, message):
         
         out=res.decode()
         out=str(out)
-        await client.send_message(message.chat.id, out)
+        try:
+            await client.send_message(message.chat.id, out)
+        except:
+            pass
         await client.send_document(message.chat.id, 'decryptedData.txt')
         try:
             os.remove('encryptedData.txt')
@@ -230,7 +233,10 @@ async def copy(client, message):
         with open('decryptedData.txt','w') as f:
            f.write(str(res))
         res=str(res)
-        await client.send_message(message.chat.id, out)
+        try:
+            await client.send_message(message.chat.id, out)
+        except:
+            pass
         await client.send_document(message.chat.id, 'decryptedData.txt')
         os.remove('decryptedData.txt')
          
